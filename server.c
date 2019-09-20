@@ -56,6 +56,8 @@ void createFile(char *str) {
 	filesize = atoi(tmp);
 	char *name = (char *)malloc(sizeof(char) * 100);
 	char tmpfilename[300];
+	memset(&filename, 0, sizeof(filename));
+	memset(&tmpfilename, 0, sizeof(tmpfilename));
 
 	int z = strlen(str) - strlen(p);
 	strncpy(name, str, z);
@@ -83,7 +85,7 @@ void createFile(char *str) {
 		char now[80];
 		time(&tim);
 		at = localtime(&tim);
-		strftime(now, 78, "%Y%m%d%H%M%S",at);
+		strftime(now, sizeof(now), "%Y%m%d%H%M%S", at);
 		strcat(tmpfilename, path);
 		if (path[strlen(path) - 1] != '/') {
                 	strcat(tmpfilename, "/");
@@ -93,11 +95,10 @@ void createFile(char *str) {
 		strncat(tmpfilename, now, strlen(now));
 		strcat(tmpfilename, suffix);
 		memset(&filename, 0, sizeof(filename));
-		printf("after filename = %s\n", filename);
-		printf("tmpfilename=%s\n", tmpfilename);
+		//printf("after filename = %s\n", filename);
+		//printf("tmpfilename=%s\n", tmpfilename);
 		strcpy(filename, tmpfilename);
 	}
-	printf("filename=%s---\n", filename);
 	ffd = open(filename, O_CREAT | O_RDWR, 0666);
 	if (ffd < 0) {
 		perror("open file error!");
@@ -174,7 +175,7 @@ int main(int argc, char * argv[]) {
 				} else if (n == 0) {
 					close(sock_fd);
 					close(ffd);
-					printf("关闭\n");
+					printf("End...\n");
 					continue;	
 					events[i].data.fd = -1;
 				}
