@@ -191,28 +191,6 @@ int main(int argc, char * argv[]) {
                                                 exit(1);
                                         }
 				}
-				
-
-				//if (strlen(buf) > 0) {
-					//printf("%d -- > %s\n", sock_fd, buf);
-					//int pos = strcspn(buf, SEP);
-					//文件名
-					//strncpy(filename, buf, pos);
-					//printf("filename = %s\n", filename);
-					//文件大小
-					//char size_f[100] = "";
-					//strcpy(size_f, buf + pos + strlen(SEP));
-					//long filesize = atoi(size_f);
-					//printf("filesize = %ld\n", filesize);
-
-					/*lseek(ffd, 0, SEEK_END);
-					int res = write(ffd, buf, n);
-					if (res != n) {
-						perror("transfer errors!!");
-						exit(1);
-					}*/
-				//}
-
 				ev.data.fd = sock_fd;
 				ev.events = EPOLLOUT;
 				epoll_ctl(epfd, EPOLL_CTL_MOD, sock_fd, &ev);	//改动监听事件为可读
