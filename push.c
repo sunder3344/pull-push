@@ -20,55 +20,53 @@
 char* strrev(char *s) {
 	char *h = s;
 	char* t = s;  
-        char ch;
+	char ch;
 	while(*t++){};  
-        t--;
-        t--;
-
+	t--;
+	t--;
 	while(h < t) {  
-            ch = *h;  
-            *h++ = *t;    /* h向尾部移动 */  
-            *t-- = ch;    /* t向头部移动 */  
-        }  
-       
-        return(s);  
+		ch = *h;
+		*h++ = *t;    /* h向尾部移动 */
+		*t-- = ch;    /* t向头部移动 */
+	}
+	return(s);
 }
 
 int strchar(char *str, char ch) {
-        int i;
-        int count = -1;
-        int length = strlen(str);
-        for (i = 0; i < length; i++) {
-                if (str[i] == ch) {
-                        count = i;
-                        break;
-                }
-        }
-        return count;
+	int i;
+	int count = -1;
+	int length = strlen(str);
+	for (i = 0; i < length; i++) {
+			if (str[i] == ch) {
+					count = i;
+					break;
+			}
+	}
+	return count;
 }
 
 char * fileStrDeal(char *filename, char *filestr) {
 	//发送文件名及文件大小
 	//filestr = (char *)malloc(sizeof(char) * 300);
 	unsigned long filesize = -1;
-        char size[100];
-        struct stat statbuff;
-        if (stat(filename, &statbuff) < 0) {
-                perror("file error\n");
-                exit(1);
-        } else {
-                filesize = statbuff.st_size;
-                sprintf(size, "%lld", filesize);
-        }
-        strcpy(filestr, filename);
+	char size[100];
+	struct stat statbuff;
+	if (stat(filename, &statbuff) < 0) {
+		perror("file error\n");
+		exit(1);
+	} else {
+		filesize = statbuff.st_size;
+		sprintf(size, "%lld", filesize);
+	}
+	strcpy(filestr, filename);
 	//剔除所有路径斜杠
 	int pos_rev = strchar(strrev(strdup(filestr)), '/');
 	int pos = strlen(filestr) - pos_rev;
 	char *realname = (char *)malloc(sizeof(char) * 100);
 	strcpy(realname, filestr + pos);
 
-        strcat(realname, SEP);
-        strcat(realname, size);
+	strcat(realname, SEP);
+	strcat(realname, size);
 	memset(&filestr, 0, sizeof(filestr));
 	filestr = realname;
 	return filestr;
@@ -104,8 +102,8 @@ int main(int argc, char * argv[]) {
 	
 	//socket延迟关闭
 	struct linger so_linger;
-        so_linger.l_onoff = 1;
-        so_linger.l_linger = 10;
+	so_linger.l_onoff = 1;
+	so_linger.l_linger = 10;
 	setsockopt(sockfd, SOL_SOCKET, SO_LINGER, &so_linger, sizeof(so_linger));
 
 	while (connect(sockfd, (struct sockaddr *)&addr, sizeof(struct sockaddr)) == -1);

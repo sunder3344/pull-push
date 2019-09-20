@@ -38,16 +38,16 @@ int isFileName(char *str) {
 }
 
 int strchar(char *str, char ch) {
-        int i;
-        int count = -1;
-        int length = strlen(str);
-        for (i = 0; i < length; i++) {
-                if (str[i] == ch) {
-                        count = i;
-                        break;
-                }
-        }
-        return count;
+	int i;
+	int count = -1;
+	int length = strlen(str);
+	for (i = 0; i < length; i++) {
+		if (str[i] == ch) {
+			count = i;
+			break;
+		}
+	}
+	return count;
 }
 
 void createFile(char *str) {
@@ -63,14 +63,14 @@ void createFile(char *str) {
 	strncpy(name, str, z);
 
 	int pos = strchar(name, '.');
-        char *pre_name = (char *)malloc(sizeof(char) * 80);
-        char *suffix = (char *)malloc(sizeof(char) * 20);
-        if (pos > 0) {          //存在后缀名的文件
-                strncpy(pre_name, name, pos);
-                strncpy(suffix, name + pos, strlen(name) - pos);
-        }
-        //printf("suffix = %s\n", suffix);	
-        //printf("pre_name = %s\n", pre_name);
+	char *pre_name = (char *)malloc(sizeof(char) * 80);
+	char *suffix = (char *)malloc(sizeof(char) * 20);
+	if (pos > 0) {          //存在后缀名的文件
+		strncpy(pre_name, name, pos);
+		strncpy(suffix, name + pos, strlen(name) - pos);
+	}
+	//printf("suffix = %s\n", suffix);
+	//printf("pre_name = %s\n", pre_name);
 
 	//whether last char of path is /
 	strcat(filename, path);	
@@ -88,8 +88,8 @@ void createFile(char *str) {
 		strftime(now, sizeof(now), "%Y%m%d%H%M%S", at);
 		strcat(tmpfilename, path);
 		if (path[strlen(path) - 1] != '/') {
-                	strcat(tmpfilename, "/");
-        	}
+			strcat(tmpfilename, "/");
+		}
 		strcat(tmpfilename, pre_name);
 		strcat(tmpfilename, "_");
 		strncat(tmpfilename, now, strlen(now));
@@ -185,11 +185,11 @@ int main(int argc, char * argv[]) {
 					createFile(buf);
 				} else {
 					lseek(ffd, 0, SEEK_END);
-                                        int res = write(ffd, buf, n);
-                                        if (res != n) {
-                                                perror("transfer errors!");
-                                                exit(1);
-                                        }
+					int res = write(ffd, buf, n);
+					if (res != n) {
+						perror("transfer errors!");
+						exit(1);
+					}
 				}
 				ev.data.fd = sock_fd;
 				ev.events = EPOLLOUT;
